@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Nft {
+  id               Int      @id @default(autoincrement())
+  tokenId          Int
+  contractAddress  String
+  depositorAddress String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime
+
+  @@index([tokenId])
+}
+
+model Order {
+  id							Int             @id @default(autoincrement())
+  orderType				Order_orderType
+  price						Int
+  createdAt				DateTime        @default(now())
+  updatedAt				DateTime
+}
+
+// Only for test purposes
+// Users can mint NFTs on Goerli from the interface
+// Transactions take time to settle, so the txHash is submitted then updated later on
+model Mint {
+  id							Int             @id @default(autoincrement())
+	erc721Address		String
+	transactionHash String
+}
+
+enum Order_orderType {
+  BID
+  ASK
+}
