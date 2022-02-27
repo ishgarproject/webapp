@@ -1,51 +1,18 @@
 import React from 'react';
-import { VStack, Stack, Box, Button, Text, Image } from '@chakra-ui/react';
-import { useIshgar, useMockERC721 } from '~/lib/hooks/use-contract';
-import { ISHGAR_VAULT_ADDRESS, MOCK_ERC721_ADDRESS } from '~/lib/constants';
-import { NFT } from '~/lib/types';
+import { Stack, VStack, Text } from '@chakra-ui/react';
+import type { ERC721 } from '~/modules/types';
 
-export const NFTCard: React.FC<NFT> = ({ tokenId, tokenUri, approvedAddress, deposited }) => {
-  const ishgar = useIshgar(true);
-  const mockERC721 = useMockERC721(true);
-
-  const approve = async () => {
-    try {
-      const tx = await mockERC721?.approve(ISHGAR_VAULT_ADDRESS, tokenId);
-      console.log(tx);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const deposit = async () => {
-    try {
-      const tx = await ishgar?.depositNFT(MOCK_ERC721_ADDRESS, tokenId);
-      console.log(tx);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const isApproved = approvedAddress === ISHGAR_VAULT_ADDRESS.toLowerCase();
+export const NftCard: React.FC<ERC721> = () => {
   return (
-    <VStack w="220px" bg="#FAFAFA" p="5" borderRadius="10">
-      <Stack direction="column">
-        <Text fontWeight="bold">Bored Ape Yatch Club</Text>
-        <Image src={tokenUri} alt="nft-img" />
-        <Box>
-          <Text>#{tokenId}</Text>
-        </Box>
-        <Stack direction="row" justify="flex-end">
-          <Button hidden={isApproved} variant="ghost" size="sm" onClick={approve}>
-            Approve
-          </Button>
-          <Button variant="ghost" size="sm" onClick={deposit}>
-            {deposited ? 'Withdraw' : 'Deposit'}
-          </Button>
-        </Stack>
-      </Stack>
-    </VStack>
+    <Stack justifyContent="center" h="300" bg="blue.500" spacing="0">
+      <VStack h="50%" bg="blue.200">
+        <Text>Collection Card</Text>
+      </VStack>
+      <VStack h="50%" bg="red.500">
+        <Text>Henlo</Text>
+      </VStack>
+    </Stack>
   );
 };
 
-export default NFTCard;
+export default NftCard;

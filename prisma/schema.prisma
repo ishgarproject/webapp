@@ -8,14 +8,19 @@ datasource db {
 }
 
 model Nft {
-  id               Int      @id @default(autoincrement())
-  tokenId          Int
+  id               Int						@id @default(autoincrement())
+  tokenId          String
   contractAddress  String
   depositorAddress String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime
+  createdAt        DateTime				@default(now())
+  updatedAt        DateTime				@updatedAt
 
   @@index([tokenId])
+}
+
+enum Order_orderType {
+  BID
+  ASK
 }
 
 model Order {
@@ -23,19 +28,6 @@ model Order {
   orderType				Order_orderType
   price						Int
   createdAt				DateTime        @default(now())
-  updatedAt				DateTime
+  updatedAt				DateTime				@updatedAt
 }
 
-// Only for test purposes
-// Users can mint NFTs on Goerli from the interface
-// Transactions take time to settle, so the txHash is submitted then updated later on
-model Mint {
-  id							Int             @id @default(autoincrement())
-	erc721Address		String
-	transactionHash String
-}
-
-enum Order_orderType {
-  BID
-  ASK
-}

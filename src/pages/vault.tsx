@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Box, Stack, Grid, GridItem, Text } from '@chakra-ui/react';
 import { VaultActivity } from '~/components';
-import { useNFTsDeposited } from '~/lib/hooks/use-nfts';
+import { useNFTsDeposited } from '~/modules/hooks/use-nfts';
 
 const Vault: NextPage = () => {
   const { nfts } = useNFTsDeposited();

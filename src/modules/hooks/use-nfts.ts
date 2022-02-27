@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, DocumentNode, TypedDocumentNode, OperationVariables } from '@apollo/client';
-import { QUERY_NFTS_BY_OWNER, QUERY_NFTS_DEPOSITED, IPFS_BASE_URI } from '~/lib/constants';
-import { NFT } from '~/lib/types';
+import { QUERY_NFTS_BY_OWNER, QUERY_NFTS_DEPOSITED, IPFS_BASE_URI } from '~/constants';
+import { NFT } from '~/modules/types';
 
 export function useNFTsDeposited() {
   return useNFTs(QUERY_NFTS_DEPOSITED);

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createRouter } from '../create-router';
+import { createRouter } from '~/server/create-router';
 
 export const nftsRouter = createRouter()
   .query('', {

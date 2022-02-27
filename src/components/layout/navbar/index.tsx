@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, Button, Spacer, Text } from '@chakra-ui/react';
-import { useWeb3Context } from '~/lib/context/web3-context';
+import { useWeb3Context } from '~/modules/context/web3-context';
 
 export const Navbar: React.FC = () => {
   const { provider, connectToWeb3Modal, disconnectFromWeb3Modal } = useWeb3Context();

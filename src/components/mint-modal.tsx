@@ -11,7 +11,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useMockERC721 } from '~/lib/hooks/use-contract';
+import { useMockERC721 } from '~/modules/hooks/use-contract';
 
 export const MintModal: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

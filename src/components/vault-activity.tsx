@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack, Text, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import ItemCard from './item-card';
-import { NFT } from '~/lib/types';
+import { NFT } from '~/modules/types';
 
 const truncateMiddleString = (s: string) => {
   if (!s) {

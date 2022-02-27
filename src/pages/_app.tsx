@@ -6,8 +6,8 @@ import { withTRPC } from '@trpc/next';
 import superjson from 'superjson';
 import { AppRouter } from '~/server/_app';
 import { Layout } from '~/components';
-import { Web3ContextProvider } from '~/lib/context/web3-context';
-import { GRAPHQL_URI, TRPC_API_URL } from '~/lib/constants';
+import { Web3ContextProvider } from '~/modules/context/web3-context';
+import { GRAPHQL_URI, TRPC_API_URL } from '~/constants';
 
 const client = new ApolloClient({
   uri: GRAPHQL_URI,

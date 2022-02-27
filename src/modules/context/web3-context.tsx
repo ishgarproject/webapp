@@ -1,10 +1,8 @@
 import React, { createContext, useContext } from 'react';
-import { Web3 } from '~/lib/types';
-import useWeb3 from '~/lib/hooks/use-web3';
+import type { Web3 } from '~/modules/types';
+import useWeb3 from '~/modules/hooks/use-web3';
 
 const Web3Context = createContext<Web3>({
-  provider: null,
-  signer: null,
   connectToWeb3Modal: async () => {},
   disconnectFromWeb3Modal: async () => {},
   error: false,
