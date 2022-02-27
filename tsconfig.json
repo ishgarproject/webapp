@@ -15,14 +15,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "~/*": ["src/*"],
-      "~/server/*": ["src/server/*"],
-      "~/db": ["src/server/db.ts"],
-      "~/lib/*": ["src/lib/*"],
-      "~/components": ["src/components/index.ts"],
-      "~/abis/*": ["src/lib/abis/*"]
+      "~/*": ["*"],
+      "~/modules/*": ["modules/*"],
+      "~/server/*": ["modules/server/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
