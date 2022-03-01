@@ -1,4 +1,4 @@
-import { AlchemyProvider, JsonRpcSigner } from '@ethersproject/providers';
+import { Web3Provider, AlchemyProvider, JsonRpcSigner } from '@ethersproject/providers';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import { getAddress } from '@ethersproject/address';
 import { AddressZero } from '@ethersproject/constants';
@@ -14,18 +14,21 @@ export function isAddress(value: any): string | false {
   }
 }
 
-function getSigner(provider: AlchemyProvider, signer: JsonRpcSigner): JsonRpcSigner {
+function getSigner(provider: Web3Provider | AlchemyProvider, signer: JsonRpcSigner): JsonRpcSigner {
   return provider.getSigner(signer._address).connectUnchecked();
 }
 
-function getProviderOrSigner(provider: AlchemyProvider, signer?: JsonRpcSigner): AlchemyProvider | JsonRpcSigner {
+function getProviderOrSigner(
+  provider: Web3Provider | AlchemyProvider,
+  signer?: JsonRpcSigner
+): Web3Provider | AlchemyProvider | JsonRpcSigner {
   return signer ? getSigner(provider, signer) : provider;
 }
 
 export function getContract<T extends Contract = Contract>(
   address: string,
   ABI: ContractInterface,
-  provider: AlchemyProvider,
+  provider: Web3Provider | AlchemyProvider,
   signer?: JsonRpcSigner
 ): T {
   if (!isAddress(address) || address === AddressZero) {

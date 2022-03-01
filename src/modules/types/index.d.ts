@@ -10,10 +10,16 @@ export interface Web3 {
   error: boolean;
 }
 
+export interface Nft {
+  tokenId: number;
+  tokenIdWithLeadingZeros: string;
+  tokenUri?: string;
+}
+
 export interface ERC721 {
   address: string;
   name?: string;
-  nfts: { tokenId: number; gateway?: string }[];
+  nfts: Nft[];
 }
 
 export interface OwnedERC721s {

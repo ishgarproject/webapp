@@ -7,7 +7,7 @@ export const Sidebar: React.FC = () => {
     <Stack
       direction="column"
       minH="94vh"
-      w={{ base: '13vw', xl: '10vw' }}
+      w={{ base: '13vw', xl: '12vw' }}
       justify="flex-start"
       spacing={6}
       pt="1%"

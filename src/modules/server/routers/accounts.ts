@@ -5,11 +5,14 @@ import { getAllERC721Names } from '~/modules/utils/web3';
 
 export const accountsRouter = createRouter().query('.nfts', {
   input: z.object({
-    address: z.string().nonempty('accounts: address must not be empty'),
+    address: z.string().nonempty('accounts: address must not be empty').optional(),
   }),
   async resolve({ ctx, input }) {
     const provider = ctx.web3Provider;
     const { address } = input;
+    if (!address) {
+      return [];
+    }
     const { ownedNfts } = await ctx.alchemy.getNfts(address);
     const nfts = reduceByContractAddress(ownedNfts);
     const addresses = Object.keys(nfts);

@@ -5,3 +5,4 @@ export * from './list-nft-card';
 export * from './nft-collection-section';
 export * from './nft-card';
 export * from './mint-modal';
+export * from './loader';

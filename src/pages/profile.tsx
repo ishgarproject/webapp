@@ -1,15 +1,20 @@
 import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Box, Stack, Text } from '@chakra-ui/react';
+import { Box, Stack, Text, Divider } from '@chakra-ui/react';
+import { NftCollectionSection, Loader } from '~/components';
 import trpc from '~/modules/trpc';
-import { NftCollectionSection } from '~/components';
-
-const address = '0x43020FC9f3E070dD9cbECAa4Ce86a51992EdDDA4';
+import { useWeb3Context } from '~/modules/context/web3-context';
 
 const Profile: NextPage = () => {
-  const { data: erc721s } = trpc.useQuery(['account.nfts', { address }]);
+  const { address } = useWeb3Context();
+  const { data: erc721s, isLoading } = trpc.useQuery(['account.nfts', { address }]);
   console.log('erc721s', erc721s);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <Box>
       <Head>
@@ -21,9 +26,12 @@ const Profile: NextPage = () => {
         <Text fontSize="3xl" fontWeight="bold">
           Profile
         </Text>
-        <Stack direction="column">
-          {erc721s?.map((erc721, index) => (
-            <NftCollectionSection key={index} {...erc721} />
+        <Stack direction="column" spacing="6">
+          {erc721s?.map((erc721) => (
+            <div key={erc721.address}>
+              <NftCollectionSection {...erc721} />
+              <Divider />
+            </div>
           ))}
         </Stack>
       </Stack>
