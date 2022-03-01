@@ -28,10 +28,10 @@ const Profile: NextPage = () => {
         </Text>
         <Stack direction="column" spacing="6">
           {erc721s?.map((erc721) => (
-            <div key={erc721.address}>
+            <Stack key={erc721.address} spacing="4">
               <NftCollectionSection {...erc721} />
               <Divider />
-            </div>
+            </Stack>
           ))}
         </Stack>
       </Stack>

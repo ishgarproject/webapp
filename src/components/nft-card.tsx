@@ -1,6 +1,6 @@
 import React from 'react';
 import { VStack, Stack, Text, Image, Button } from '@chakra-ui/react';
-import { useIshgar, useMockERC721 } from '~/modules/hooks/use-contract';
+import { useIshgar, useERC721 } from '~/modules/hooks/use-contract';
 import type { Nft } from '~/modules/types';
 
 export const NftCard: React.FC<{ erc721Address: string } & Nft> = ({
@@ -10,7 +10,7 @@ export const NftCard: React.FC<{ erc721Address: string } & Nft> = ({
   tokenUri,
 }) => {
   const { depositNft } = useIshgar();
-  const { approve, mint } = useMockERC721();
+  const { approve } = useERC721(erc721Address);
   return (
     <VStack maxW="300px">
       <Stack direction="column" align="center" justifyContent="center" spacing="-2">
@@ -18,9 +18,6 @@ export const NftCard: React.FC<{ erc721Address: string } & Nft> = ({
         <Stack w="100%" px="2" py="1" bg="#343a40" direction="column" borderBottomRadius="md">
           <Text>#{tokenIdWithLeadingZeros}</Text>
           <Stack direction="row" justify="flex-end">
-            <Button variant="ghost" onClick={() => mint()}>
-              Mint
-            </Button>
             <Button variant="ghost" onClick={() => approve(tokenId)}>
               Approve
             </Button>

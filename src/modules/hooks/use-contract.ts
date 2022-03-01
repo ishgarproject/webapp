@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Contract, ContractInterface } from '@ethersproject/contracts';
 import useWeb3 from './use-web3';
-import IshgarVaultAbi from '~/abis/IshgarVault.json';
-import MockERC721Abi from '~/abis/MockERC721.json';
-import type { IshgarVault, MockERC721 } from '~/abis/types';
-import { ISHGAR_VAULT_ADDRESS, MOCK_ERC721_ADDRESS } from '~/constants';
 import { getContract } from '~/modules/utils/web3';
+import IshgarVaultAbi from '~/abis/IshgarVault.json';
+import ERC721Abi from '~/abis/ERC721.json';
+import type { IshgarVault, ERC721 } from '~/abis/types';
+import { ISHGAR_VAULT_ADDRESS } from '~/constants';
 
 export function useContract<T extends Contract = Contract>(
   addressOrAddressMap: string | { [chainId: number]: string } | undefined,
@@ -33,11 +33,12 @@ export function useIshgar(withSignerIfPossible?: boolean) {
   const contract = useContract<IshgarVault>(ISHGAR_VAULT_ADDRESS, IshgarVaultAbi, withSignerIfPossible);
 
   const depositNft = async (erc721Address: string, tokenId: number) => {
-    if (!contract) {
-      return;
+    try {
+      const tx = await contract?.depositNFT(erc721Address, tokenId);
+      console.log(tx);
+    } catch (e) {
+      console.error(e);
     }
-    const tx = await contract.depositNFT(erc721Address, tokenId);
-    console.log(tx);
   };
 
   return {
@@ -46,29 +47,18 @@ export function useIshgar(withSignerIfPossible?: boolean) {
   };
 }
 
-export function useMockERC721(withSignerIfPossible?: boolean) {
-  const contract = useContract<MockERC721>(MOCK_ERC721_ADDRESS, MockERC721Abi, withSignerIfPossible);
-
-  const mint = async () => {
-    if (!contract) {
-      return;
-    }
-    const tx = await contract.mint();
-    console.log(tx);
-  };
+export function useERC721(address: string, withSignerIfPossible?: boolean) {
+  const contract = useContract<ERC721>(address, ERC721Abi, withSignerIfPossible);
 
   const approve = async (tokenId: number) => {
-    if (!contract) {
-      return;
-    }
     try {
       console.log(tokenId);
-      const tx = await contract.approve(ISHGAR_VAULT_ADDRESS, tokenId);
+      const tx = await contract?.approve(ISHGAR_VAULT_ADDRESS, 5);
       console.log(tx);
     } catch (e) {
       console.error(e);
     }
   };
 
-  return { contract, mint, approve };
+  return { contract, approve };
 }
