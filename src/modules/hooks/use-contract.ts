@@ -30,7 +30,20 @@ export function useContract<T extends Contract = Contract>(
 }
 
 export function useIshgar(withSignerIfPossible?: boolean) {
-  return useContract<IshgarVault>(ISHGAR_VAULT_ADDRESS, IshgarVaultAbi, withSignerIfPossible);
+  const contract = useContract<IshgarVault>(ISHGAR_VAULT_ADDRESS, IshgarVaultAbi, withSignerIfPossible);
+
+  const depositNft = async (erc721Address: string, tokenId: number) => {
+    if (!contract) {
+      return;
+    }
+    const tx = await contract.depositNFT(erc721Address, tokenId);
+    console.log(tx);
+  };
+
+  return {
+    contract,
+    depositNft,
+  };
 }
 
 export function useMockERC721(withSignerIfPossible?: boolean) {
@@ -44,5 +57,18 @@ export function useMockERC721(withSignerIfPossible?: boolean) {
     console.log(tx);
   };
 
-  return { contract, mint };
+  const approve = async (tokenId: number) => {
+    if (!contract) {
+      return;
+    }
+    try {
+      console.log(tokenId);
+      const tx = await contract.approve(ISHGAR_VAULT_ADDRESS, tokenId);
+      console.log(tx);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return { contract, mint, approve };
 }
