@@ -5,11 +5,13 @@ import Sidebar from './sidebar';
 
 export const Layout: React.FC = ({ children }) => {
   return (
-    <Box h="100vh" w="100vw" maxW="100vw" overflowX="hidden">
+    <Box h="100vh" w="100vw" minH="100vh" maxW="100vw" overflowX="hidden">
       <Navbar />
-      <Stack direction="row" maxW="100vw">
+      <Stack direction="row">
         <Sidebar />
-        <Box w="100%">{children}</Box>
+        <Box minH="94vh" pt="6vh" pl="260px">
+          {children}
+        </Box>
       </Stack>
     </Box>
   );

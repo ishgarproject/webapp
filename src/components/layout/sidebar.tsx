@@ -6,10 +6,13 @@ export const Sidebar: React.FC = () => {
   return (
     <Stack
       direction="column"
-      minH="94vh"
-      w={{ base: '13vw', xl: '12vw' }}
+      h="94vh"
+      maxH="94vh"
+      w={{ base: '13vw', xl: '260px' }}
+      mt="6vh"
       justify="flex-start"
       spacing={6}
+      position="fixed"
       pt="1%"
       px="1%"
       borderRight="1px"
