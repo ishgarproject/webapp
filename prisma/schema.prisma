@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Nft {
-  id               Int						@id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   tokenId          String
   contractAddress  String
   depositorAddress String
-  createdAt        DateTime				@default(now())
-  updatedAt        DateTime				@updatedAt
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@index([tokenId])
 }
@@ -24,10 +24,9 @@ enum Order_orderType {
 }
 
 model Order {
-  id							Int             @id @default(autoincrement())
-  orderType				Order_orderType
-  price						Int
-  createdAt				DateTime        @default(now())
-  updatedAt				DateTime				@updatedAt
+  id        Int             @id @default(autoincrement())
+  orderType Order_orderType
+  price     Int
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 }
-
