@@ -9,7 +9,7 @@ export const Layout: React.FC = ({ children }) => {
       <Navbar />
       <Stack direction="row">
         <Sidebar />
-        <Box minH="94vh" pt="6vh" pl="260px">
+        <Box minH="94vh" pt="6vh" pl="260px" w="100%">
           {children}
         </Box>
       </Stack>

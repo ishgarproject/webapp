@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, Button } from '@chakra-ui/react';
-import { BsSafe, BsCardList, BsPerson } from 'react-icons/bs';
+import { BsCardList } from 'react-icons/bs';
 
 export const Sidebar: React.FC = () => {
   return (
@@ -35,17 +35,5 @@ const items = [
     label: 'Order Book',
     href: '/',
     Icon: BsCardList,
-  },
-  {
-    id: 1,
-    label: 'Vault',
-    href: '/vault',
-    Icon: BsSafe,
-  },
-  {
-    id: 2,
-    label: 'Profile',
-    href: '/profile',
-    Icon: BsPerson,
   },
 ];
