@@ -8,7 +8,7 @@ export const Sidebar: React.FC = () => {
       direction="column"
       h="94vh"
       maxH="94vh"
-      w={{ base: '13vw', xl: '260px' }}
+      w="13vw"
       mt="6vh"
       justify="flex-start"
       spacing={6}

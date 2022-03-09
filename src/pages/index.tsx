@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { Stack, Text } from '@chakra-ui/react';
+import { useWeb3Context } from '~/modules/context/web3-context';
 import { Collection } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Home: NextPage = () => {
-  const { data } = trpc.useQuery(['account.nfts', { address: '0x43020FC9f3E070dD9cbECAa4Ce86a51992EdDDA4' }]);
+  const { address } = useWeb3Context();
+  const { data } = trpc.useQuery(['account.nfts', { address }]);
   console.log('data', data);
   return (
     <>

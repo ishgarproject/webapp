@@ -5,11 +5,14 @@ import { isAddress } from '~/modules/utils/web3';
 
 export const accountsRouter = createRouter().query('.nfts', {
   input: z.object({
-    address: z.string().nonempty('accounts: address must not be empty'),
+    address: z.string().nonempty('accounts: address must not be empty').optional(),
   }),
   async resolve({ ctx, input }) {
     const { prisma } = ctx;
     const { address } = input;
+    if (!address) {
+      return [];
+    }
     if (!isAddress(address)) {
       throw new TRPCError({
         code: 'BAD_REQUEST',

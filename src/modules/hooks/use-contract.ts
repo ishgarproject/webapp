@@ -52,8 +52,7 @@ export function useERC721(address: string, withSignerIfPossible?: boolean) {
 
   const approve = async (tokenId: number) => {
     try {
-      console.log(tokenId);
-      const tx = await contract?.approve(ISHGAR_VAULT_ADDRESS, 5);
+      const tx = await contract?.approve(ISHGAR_VAULT_ADDRESS, tokenId);
       console.log(tx);
     } catch (e) {
       console.error(e);
