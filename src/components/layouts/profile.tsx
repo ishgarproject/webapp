@@ -18,7 +18,7 @@ const ProfileView: NextPage = ({ children }) => {
             <Box h="45%" bg="#151b22" />
             <Stack h="55%" direction="column" justify="space-between" pb="1%">
               <Stack align="center">
-                <Avatar size="2xl" mt="-16" />
+                <Avatar size="2xl" mt="-16" src="/avatar-fallback.jpg" />
                 <AddressField />
               </Stack>
               <Tabs />
