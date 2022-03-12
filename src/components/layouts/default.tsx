@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import Navbar from '../navbar';
 
-export const Layout: React.FC = ({ children }) => {
+export const DefaultLayout: React.FC = ({ children }) => {
   return (
     <Box h="100vh" w="100vw" minH="100vh" maxW="100vw" overflowX="hidden">
       <Navbar />
@@ -13,4 +13,4 @@ export const Layout: React.FC = ({ children }) => {
   );
 };
 
-export default Layout;
+export default DefaultLayout;

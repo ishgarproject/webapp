@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Stack, Box, Avatar } from '@chakra-ui/react';
 import { Navbar, AddressField, Tabs } from '~/components';
 
-const ProfileView: NextPage = ({ children }) => {
+const ProfileLayout: React.FC = ({ children }) => {
   return (
     <>
       <Head>
@@ -31,4 +31,4 @@ const ProfileView: NextPage = ({ children }) => {
   );
 };
 
-export default ProfileView;
+export default ProfileLayout;

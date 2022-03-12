@@ -1,14 +1,9 @@
-import type { NextPage } from 'next';
-import { ReactElement, ReactNode } from 'react';
+import { NextPageWithLayout } from '~/pages/_app';
 import { Box } from '@chakra-ui/react';
 import { useWeb3Context } from '~/modules/context/web3-context';
 import { Collection } from '~/components';
-import ProfileView from '~/components/layouts/profile';
+import ProfileLayout from '~/components/layouts/profile';
 import trpc from '~/modules/trpc';
-
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
 
 const Profile: NextPageWithLayout = () => {
   const { address } = useWeb3Context();
@@ -23,8 +18,6 @@ const Profile: NextPageWithLayout = () => {
   );
 };
 
-Profile.getLayout = function getLayout(page: ReactElement) {
-  return <ProfileView>{page}</ProfileView>;
-};
+Profile.Layout = ProfileLayout;
 
 export default Profile;

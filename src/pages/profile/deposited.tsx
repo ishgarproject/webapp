@@ -1,8 +1,7 @@
-import { ReactElement } from 'react';
 import type { NextPageWithLayout } from '~/pages/_app';
 import { useWeb3Context } from '~/modules/context/web3-context';
 import { Box, Grid, GridItem } from '@chakra-ui/react';
-import ProfileView from '~/components/layouts/profile';
+import ProfileLayout from '~/components/layouts/profile';
 import { VaultNftCard } from '~/components';
 import trpc from '~/modules/trpc';
 
@@ -23,8 +22,6 @@ export const Deposited: NextPageWithLayout = () => {
   );
 };
 
-Deposited.getLayout = function getLayout(page: ReactElement) {
-  return <ProfileView>{page}</ProfileView>;
-};
+Deposited.Layout = ProfileLayout;
 
 export default Deposited;
