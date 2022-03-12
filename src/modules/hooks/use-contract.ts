@@ -32,7 +32,7 @@ export function useContract<T extends Contract = Contract>(
 export function useIshgar(withSignerIfPossible?: boolean) {
   const contract = useContract<IshgarVault>(ISHGAR_VAULT_ADDRESS, IshgarVaultAbi, withSignerIfPossible);
 
-  const depositNft = async (erc721Address: string, tokenId: number) => {
+  const depositNft = async (erc721Address: string, tokenId: string) => {
     try {
       const tx = await contract?.depositNFT(erc721Address, tokenId);
       console.log(tx);
@@ -50,7 +50,7 @@ export function useIshgar(withSignerIfPossible?: boolean) {
 export function useERC721(address: string, withSignerIfPossible?: boolean) {
   const contract = useContract<ERC721>(address, ERC721Abi, withSignerIfPossible);
 
-  const approve = async (tokenId: number) => {
+  const approve = async (tokenId: string) => {
     try {
       const tx = await contract?.approve(ISHGAR_VAULT_ADDRESS, tokenId);
       console.log(tx);
