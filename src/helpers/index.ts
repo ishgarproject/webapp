@@ -1,7 +1,7 @@
 import { isAddress } from '~/modules/utils/web3';
 
-export function truncateMiddleOfAddress(address: string) {
-  if (!isAddress(address)) {
+export function truncateMiddleOfAddress(address?: string) {
+  if (!address || !isAddress(address)) {
     return address;
   }
   const strLen = address.length;
