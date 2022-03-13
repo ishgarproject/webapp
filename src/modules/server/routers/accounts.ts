@@ -21,7 +21,7 @@ export const accountsRouter = createRouter()
 
     return next({ ctx });
   })
-  .query('.nfts', {
+  .query('nfts', {
     input: inputSchema,
     async resolve({ ctx, input }) {
       const { prisma } = ctx;
@@ -45,7 +45,7 @@ export const accountsRouter = createRouter()
       });
     },
   })
-  .query('.deposited', {
+  .query('deposited', {
     input: inputSchema,
     async resolve({ ctx, input }) {
       const { prisma } = ctx;

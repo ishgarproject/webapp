@@ -1,13 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { Stack, Text } from '@chakra-ui/react';
-import { useWeb3Context } from '~/modules/context/web3-context';
-import { Collection } from '~/components';
+import Link from 'next/link';
+import { Stack, Table, Tbody, Tr, Td } from '@chakra-ui/react';
+import { SimpleItemCard, SimpleStat } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Home: NextPage = () => {
-  const { address } = useWeb3Context();
-  const { data } = trpc.useQuery(['account.nfts', { address }]);
+  const { data } = trpc.useQuery(['vault.collections']);
   console.log('data', data);
   return (
     <>
@@ -16,13 +15,30 @@ const Home: NextPage = () => {
         <meta name="description" content="Ishgar: Order book on Starknet" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Stack direction="column" p="2%" spacing="8">
-        <Text fontSize="3xl" fontWeight="bold">
-          Profile
-        </Text>
-        {data?.map((collection) => (
-          <Collection key={collection.address} {...collection} />
-        ))}
+      <Stack px="13%" pt="2%">
+        <Table backgroundColor="#21262A">
+          <Tbody>
+            {data?.map(({ id, name, address, imageUri }, index) => (
+              <Link key={id} href={`/collection/${address}`}>
+                <Tr _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.16)' }}>
+                  <Td>{index + 1}</Td>
+                  <Td>
+                    <SimpleItemCard label={name} imageUri={imageUri} />
+                  </Td>
+                  <Td isNumeric>
+                    <SimpleStat label="Floor" num="25.4" />
+                  </Td>
+                  <Td isNumeric>
+                    <SimpleStat label="Total Vol" num="25.4" />
+                  </Td>
+                  <Td isNumeric>
+                    <SimpleStat label="24h Vol" num="25.4" />
+                  </Td>
+                </Tr>
+              </Link>
+            ))}
+          </Tbody>
+        </Table>
       </Stack>
     </>
   );
