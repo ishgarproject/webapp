@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Stack, Grid, GridItem, Text } from '@chakra-ui/react';
+import { Stack, Text } from '@chakra-ui/react';
 import type { NextPageWithLayout } from '~/pages/_app';
 import { useWeb3Context } from '~/modules/context/web3-context';
-import { useIshgar, useERC721 } from '~/modules/hooks/use-contract';
 import { ProfileLayout } from '~/components/layouts/profile';
-import { Sidebar, OwnedNftCard } from '~/components';
+import { CollectionDisplayList } from '~/views/profile/collection/collection-display-list';
+import { Sidebar } from '~/components';
 import { truncateMiddleOfAddress } from '~/helpers';
 import type { LayerNetwork } from '~/modules/types';
 import trpc from '~/modules/trpc';
@@ -48,11 +48,8 @@ const ProfileCollectionInfo: React.FC<IProfileCollectionInfo> = ({
 export const ProfileCollection: NextPageWithLayout = () => {
   const collectionAddress = useRouter().query?.collectionAddress?.toString();
   const { address } = useWeb3Context();
-  const { depositNft } = useIshgar();
-  const { approve } = useERC721(collectionAddress!);
   const [layerNetwork, setLayerNetwork] = useState<LayerNetwork>('ethereum');
   const { data } = trpc.useQuery(['account.collection', { ownerAddress: address, collectionAddress, layerNetwork }]);
-
   return (
     <Stack direction="row" h="100%" spacing="4">
       <Sidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
@@ -63,13 +60,11 @@ export const ProfileCollection: NextPageWithLayout = () => {
           totalTokensOnL1={data?.totalTokensOnL1}
           totalTokensOnL2={data?.totalTokensOnL2}
         />
-        <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-          {data?.tokens?.map((token) => (
-            <GridItem key={token.tokenId}>
-              <OwnedNftCard {...token} approve={approve} depositNft={depositNft} />
-            </GridItem>
-          ))}
-        </Grid>
+        <CollectionDisplayList
+          collectionAddress={collectionAddress}
+          tokens={data?.tokens}
+          layerNetwork={layerNetwork}
+        />
       </Stack>
     </Stack>
   );
