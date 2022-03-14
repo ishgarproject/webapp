@@ -10,7 +10,7 @@ import { DefaultLayout } from '~/components/layouts/default';
 import { TRPC_API_URL } from '~/constants';
 
 export type NextPageWithLayout = NextPage & {
-  Layout: React.FC;
+  Layout?: React.FC;
 };
 
 type AppPropsWithLayout = AppProps & {

@@ -9,7 +9,7 @@ interface ISimpleItemCard {
 export const SimpleItemCard: React.FC<ISimpleItemCard> = ({ label, imageUri }) => {
   return (
     <Stack direction="row" align="center">
-      <Image w="10" src={imageUri ?? undefined} alt={`${label}-logo`} borderRadius="full" />
+      <Image src={imageUri ?? undefined} alt={`${label}-logo`} borderRadius="full" boxSize="50px" />
       <Text fontWeight="bold">{label}</Text>
     </Stack>
   );
