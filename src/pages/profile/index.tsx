@@ -23,7 +23,7 @@ const Profile: NextPageWithLayout = () => {
         </Thead>
         <Tbody>
           {data?.map(({ id, address, name, imageUri, totalTokensInWallet, totalTokensInVault }, index) => (
-            <Link key={id} href={`/profile/${address}`}>
+            <Link key={id} href={`/profile/${address}`} passHref>
               <Tr _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.16)', cursor: 'pointer' }}>
                 <Td>{index + 1}</Td>
                 <Td>

@@ -19,7 +19,7 @@ const Home: NextPage = () => {
         <Table backgroundColor="#21262A">
           <Tbody>
             {data?.map(({ id, name, address, imageUri }, index) => (
-              <Link key={id} href={`/collection/${address}`}>
+              <Link key={id} href={`/collection/${address}`} passHref>
                 <Tr _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.16)', cursor: 'pointer' }}>
                   <Td>{index + 1}</Td>
                   <Td>
