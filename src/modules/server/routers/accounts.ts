@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { createRouter } from '~/server/create-router';
 import { isAddress } from '~/modules/utils/web3';
+import type { LayerNetworks } from '~/modules/types';
 
 const inputSchema = z.object({ ownerAddress: z.string().nonempty('accounts: address must not be empty').optional() });
 
@@ -68,10 +69,12 @@ export const accountsRouter = createRouter()
     input: z.object({
       ownerAddress: z.string().nonempty('accounts: owner address must not be empty').optional(),
       collectionAddress: z.string().nonempty('accounts: collectionAddress must not be empty').optional(),
+      layerNetwork: z.enum(['ethereum', 'starknet']),
     }),
     async resolve({ ctx, input }) {
       const { prisma } = ctx;
-      const { ownerAddress, collectionAddress } = input;
+      const { ownerAddress, collectionAddress, layerNetwork } = input;
+      const onStarknet = layerNetwork === 'starknet';
       const collection = await prisma.contract.findFirst({
         where: { address: collectionAddress },
         select: {
@@ -88,6 +91,9 @@ export const accountsRouter = createRouter()
       const onL1Counter = collection?.tokens.reduce((sum, { depositedInVault }) => (depositedInVault ? sum : sum + 1), 0);
       // prettier-ignore
       const onL2Counter = collection?.tokens.reduce((sum, { depositedInVault }) => (depositedInVault ? sum + 1 : sum), 0);
+      if (collection) {
+        collection.tokens = collection.tokens.filter(({ depositedInVault }) => depositedInVault === onStarknet);
+      }
       return {
         ...collection,
         totalTokensOnL1: onL1Counter,

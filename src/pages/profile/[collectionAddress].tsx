@@ -1,11 +1,13 @@
-import type { NextPageWithLayout } from '~/pages/_app';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Stack, Grid, GridItem, Text } from '@chakra-ui/react';
+import type { NextPageWithLayout } from '~/pages/_app';
 import { useWeb3Context } from '~/modules/context/web3-context';
 import { useIshgar, useERC721 } from '~/modules/hooks/use-contract';
 import { ProfileLayout } from '~/components/layouts/profile';
-import { OwnedNftCard } from '~/components';
+import { Sidebar, OwnedNftCard } from '~/components';
 import { truncateMiddleOfAddress } from '~/helpers';
+import type { LayerNetwork } from '~/modules/types';
 import trpc from '~/modules/trpc';
 
 interface IProfileCollectionInfo {
@@ -48,23 +50,27 @@ export const ProfileCollection: NextPageWithLayout = () => {
   const { address } = useWeb3Context();
   const { depositNft } = useIshgar();
   const { approve } = useERC721(collectionAddress!);
-  const { data } = trpc.useQuery(['account.collection', { ownerAddress: address, collectionAddress }]);
-  console.log('data', data);
+  const [layerNetwork, setLayerNetwork] = useState<LayerNetwork>('ethereum');
+  const { data } = trpc.useQuery(['account.collection', { ownerAddress: address, collectionAddress, layerNetwork }]);
+
   return (
-    <Stack px="4%" spacing="6">
-      <ProfileCollectionInfo
-        name={data?.name}
-        address={data?.address}
-        totalTokensOnL1={data?.totalTokensOnL1}
-        totalTokensOnL2={data?.totalTokensOnL2}
-      />
-      <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-        {data?.tokens?.map((token) => (
-          <GridItem key={token.tokenId}>
-            <OwnedNftCard {...token} approve={approve} depositNft={depositNft} />
-          </GridItem>
-        ))}
-      </Grid>
+    <Stack direction="row" h="100%" spacing="4">
+      <Sidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
+      <Stack minW="83vw" pr="2%" spacing="6">
+        <ProfileCollectionInfo
+          name={data?.name}
+          address={data?.address}
+          totalTokensOnL1={data?.totalTokensOnL1}
+          totalTokensOnL2={data?.totalTokensOnL2}
+        />
+        <Grid templateColumns="repeat(6, 1fr)" gap={6}>
+          {data?.tokens?.map((token) => (
+            <GridItem key={token.tokenId}>
+              <OwnedNftCard {...token} approve={approve} depositNft={depositNft} />
+            </GridItem>
+          ))}
+        </Grid>
+      </Stack>
     </Stack>
   );
 };

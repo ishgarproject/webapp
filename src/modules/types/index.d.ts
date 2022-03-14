@@ -9,3 +9,5 @@ export interface Web3 {
   disconnectFromWeb3Modal: () => Promise<void>;
   error: boolean;
 }
+
+export type LayerNetwork = 'ethereum' | 'starknet';
