@@ -5,7 +5,7 @@ import type { NextPageWithLayout } from '~/pages/_app';
 import { useWeb3Context } from '~/modules/context/web3-context';
 import { ProfileLayout } from '~/components/layouts/profile';
 import { CollectionDisplayList } from '~/views/profile/collection/collection-display-list';
-import { Sidebar } from '~/components';
+import { ProfileSidebar } from '~/components/sidebars/profile-sidebar';
 import { truncateMiddleOfAddress } from '~/helpers';
 import type { LayerNetwork } from '~/modules/types';
 import trpc from '~/modules/trpc';
@@ -51,8 +51,8 @@ export const ProfileCollection: NextPageWithLayout = () => {
   const [layerNetwork, setLayerNetwork] = useState<LayerNetwork>('ethereum');
   const { data } = trpc.useQuery(['account.collection', { ownerAddress: address, collectionAddress, layerNetwork }]);
   return (
-    <Stack direction="row" h="100%" spacing="4">
-      <Sidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
+    <Stack direction="row" spacing="4">
+      <ProfileSidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
       <Stack minW="83vw" pr="2%" spacing="6">
         <ProfileCollectionInfo
           name={data?.name}

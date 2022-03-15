@@ -5,7 +5,7 @@ export const ProfileLayout: React.FC = ({ children }) => {
   return (
     <Box h="100vh" w="100vw" minH="100vh" maxW="100vw" overflowX="hidden">
       <Navbar />
-      <Stack direction="column" minH="100vh">
+      <Stack direction="column">
         <Stack h="40vh" direction="column" spacing="0">
           <Box h="60%" bg="#151b22" />
           <Stack h="40%" direction="column" justify="space-between" pb="1%">

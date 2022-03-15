@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Image, Text } from '@chakra-ui/react';
 
-interface IBaseNftCard {
+export interface IBaseNftCard {
   tokenId: string;
   imageUri: string | null;
 }
