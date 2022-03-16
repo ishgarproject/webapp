@@ -1,3 +1,4 @@
+export * from './head';
 export * from './cards';
 export * from './navbar';
 export * from './nav-button';

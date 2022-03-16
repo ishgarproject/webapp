@@ -1,11 +1,10 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Stack, Text, Image, Icon, Grid, GridItem } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { MarketplaceSidebar } from '~/components/sidebars/marketplace-sidebar';
-import { NftCard } from '~/components';
+import { Head, NftCard } from '~/components';
 import { truncateMiddleOfAddress } from '~/helpers';
 import trpc from '~/modules/trpc';
 
@@ -21,11 +20,7 @@ const Collection: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Ishgar</title>
-        <meta name="description" content="Ishgar: Order book on Starknet" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head />
       <Stack direction="column" spacing="0">
         <Stack
           direction="column"

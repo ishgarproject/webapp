@@ -4,8 +4,9 @@ import { Stack, Text } from '@chakra-ui/react';
 import type { NextPageWithLayout } from '~/pages/_app';
 import { useWeb3Context } from '~/modules/context/web3-context';
 import { ProfileLayout } from '~/components/layouts/profile';
-import { CollectionDisplayList } from '~/views/profile/collection/collection-display-list';
 import { ProfileSidebar } from '~/components/sidebars/profile-sidebar';
+import { Head } from '~/components';
+import { CollectionDisplayList } from '~/views/profile/collection/collection-display-list';
 import { truncateMiddleOfAddress } from '~/helpers';
 import type { LayerNetwork } from '~/modules/types';
 import trpc from '~/modules/trpc';
@@ -51,22 +52,25 @@ export const ProfileCollection: NextPageWithLayout = () => {
   const [layerNetwork, setLayerNetwork] = useState<LayerNetwork>('ethereum');
   const { data } = trpc.useQuery(['account.collection', { ownerAddress: address, collectionAddress, layerNetwork }]);
   return (
-    <Stack direction="row" spacing="4">
-      <ProfileSidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
-      <Stack minW="83vw" pr="2%" spacing="6">
-        <ProfileCollectionInfo
-          name={data?.name}
-          address={data?.address}
-          totalTokensOnL1={data?.totalTokensOnL1}
-          totalTokensOnL2={data?.totalTokensOnL2}
-        />
-        <CollectionDisplayList
-          collectionAddress={collectionAddress}
-          tokens={data?.tokens}
-          layerNetwork={layerNetwork}
-        />
+    <>
+      <Head />
+      <Stack direction="row" spacing="4">
+        <ProfileSidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
+        <Stack minW="83vw" pr="2%" spacing="6">
+          <ProfileCollectionInfo
+            name={data?.name}
+            address={data?.address}
+            totalTokensOnL1={data?.totalTokensOnL1}
+            totalTokensOnL2={data?.totalTokensOnL2}
+          />
+          <CollectionDisplayList
+            collectionAddress={collectionAddress}
+            tokens={data?.tokens}
+            layerNetwork={layerNetwork}
+          />
+        </Stack>
       </Stack>
-    </Stack>
+    </>
   );
 };
 

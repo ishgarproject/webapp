@@ -1,8 +1,7 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 import { Stack, Text, Table, Tbody, Tr, Td, Divider } from '@chakra-ui/react';
-import { SimpleItemCard, SimpleStat } from '~/components';
+import { Head, SimpleItemCard, SimpleStat } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Home: NextPage = () => {
@@ -10,11 +9,7 @@ const Home: NextPage = () => {
   console.log('data', data);
   return (
     <>
-      <Head>
-        <title>Ishgar</title>
-        <meta name="description" content="Ishgar: Order book on Starknet" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Head />
       <Stack direction="column" px="13%" pt="2%" spacing="5">
         <Text fontSize="4xl">Collections</Text>
         <Text fontSize="xl">The top NFT collections on Ishgar</Text>
