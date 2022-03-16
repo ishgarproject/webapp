@@ -54,7 +54,7 @@ export const ProfileCollection: NextPageWithLayout = () => {
   return (
     <>
       <Head />
-      <Stack direction="row" spacing="4">
+      <Stack direction="row" minH="59vh" spacing="4">
         <ProfileSidebar layerNetwork={layerNetwork} setLayerNetwork={setLayerNetwork} />
         <Stack minW="83vw" pr="2%" spacing="6">
           <ProfileCollectionInfo

@@ -6,7 +6,7 @@ export const BaseSidebar: React.FC = ({ children }) => {
   return (
     <Stack
       direction="column"
-      w="100%"
+      minW="17vw"
       maxW="17vw"
       pl="2%"
       pr="1%"

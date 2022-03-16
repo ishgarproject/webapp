@@ -25,7 +25,7 @@ const EthereumNftList: React.FC<IBaseCollectionDisplay> = ({ collectionAddress, 
   const { depositNft } = useIshgar();
   const { approve } = useERC721(collectionAddress!);
   return (
-    <Grid templateColumns="repeat(6, 1fr)" gap={6}>
+    <Grid templateColumns={{ base: 'repeat(4, 1fr)' }} gap={6}>
       {tokens?.map(({ tokenId, imageUri, contract, approvedAddress }) => {
         const hasApproved = approvedAddress?.toLowerCase() === ISHGAR_VAULT_ADDRESS.toLowerCase();
         return (

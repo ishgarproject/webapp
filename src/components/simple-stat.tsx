@@ -2,7 +2,11 @@ import React from 'react';
 import { Stack, Text, Icon } from '@chakra-ui/react';
 import EthereumLogo from './ethereum-logo';
 
-export const SimpleStat: React.FC<{ label: string; num: string; isEther?: boolean }> = ({ label, num, isEther }) => {
+export const SimpleStat: React.FC<{ label: string; value?: string | null; isEther?: boolean }> = ({
+  label,
+  value: num,
+  isEther,
+}) => {
   return (
     <Stack direction="column" align="flex-start">
       <Text fontSize="sm" color="gray.300">
@@ -10,7 +14,7 @@ export const SimpleStat: React.FC<{ label: string; num: string; isEther?: boolea
       </Text>
       <Stack direction="row" align="center">
         {isEther && <Icon as={EthereumLogo} />}
-        <Text fontWeight={isEther ? 'bold' : 'normal'}>{num}</Text>
+        <Text fontWeight={isEther ? 'bold' : 'normal'}>{num || '---'}</Text>
       </Stack>
     </Stack>
   );

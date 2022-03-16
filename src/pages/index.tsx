@@ -5,8 +5,8 @@ import { Head, SimpleItemCard, SimpleStat } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Home: NextPage = () => {
-  const { data } = trpc.useQuery(['vault.collections']);
-  console.log('data', data);
+  const { data: collections } = trpc.useQuery(['vault.collections']);
+  console.log('collections', collections);
   return (
     <>
       <Head />
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         <Divider />
         <Table backgroundColor="#21262A">
           <Tbody>
-            {data?.map(({ id, name, address, imageUri, totalTokensAvailable }, index) => (
+            {collections?.map(({ id, name, address, imageUri, floor, totalTokensAvailable }, index) => (
               <Link key={id} href={`/collection/${address}`} passHref>
                 <Tr _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.16)', cursor: 'pointer' }}>
                   <Td>{index + 1}</Td>
@@ -24,16 +24,16 @@ const Home: NextPage = () => {
                     <SimpleItemCard label={name} imageUri={imageUri} />
                   </Td>
                   <Td isNumeric>
-                    <SimpleStat label="Available" num={`${totalTokensAvailable} Items`} />
+                    <SimpleStat label="Available" value={`${totalTokensAvailable} Items`} />
                   </Td>
                   <Td isNumeric>
-                    <SimpleStat label="Floor" num="25.4" isEther />
+                    <SimpleStat label="Floor" value={floor?.toString()} isEther />
                   </Td>
                   <Td isNumeric>
-                    <SimpleStat label="Total Vol" num="25.4" isEther />
+                    <SimpleStat label="Total Vol" value={null} isEther />
                   </Td>
                   <Td isNumeric>
-                    <SimpleStat label="24h Vol" num="25.4" isEther />
+                    <SimpleStat label="24h Vol" value={null} isEther />
                   </Td>
                 </Tr>
               </Link>
