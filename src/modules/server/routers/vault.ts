@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
+import { truncateMiddleOfAddress } from '~/helpers';
 
 export const vaultRouter = createRouter()
   .query('collection', {
@@ -28,6 +29,7 @@ export const vaultRouter = createRouter()
               id: true,
               tokenId: true,
               imageUri: true,
+              owner: true,
               orders: {
                 take: 1,
                 where: {
@@ -48,10 +50,13 @@ export const vaultRouter = createRouter()
         },
       });
       // make highestAsk more accessible for frontend
-      const tokens = collection.tokens.map(({ orders, ...rest }) => ({
+      const tokens = collection.tokens.map(({ orders, owner, ...rest }) => ({
         ...rest,
-        // only one open ask taken
-        highestAsk: orders[0]?.value || null,
+        owner: {
+          full: owner,
+          truncated: truncateMiddleOfAddress(owner),
+        },
+        highestAsk: orders[0]?.value || null, // only one open ask taken
       }));
       // collection floor
       const { _min: floor } = await prisma.order.aggregate({
@@ -67,7 +72,15 @@ export const vaultRouter = createRouter()
         totalVolume: null, // TODO
         totalTokensAvailable,
       };
-      return { ...collection, stats, tokens };
+      return {
+        ...collection,
+        address: {
+          full: collection.address,
+          truncated: truncateMiddleOfAddress(collection.address),
+        },
+        stats,
+        tokens,
+      };
     },
   })
   .query('collections', {

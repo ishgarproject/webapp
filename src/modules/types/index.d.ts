@@ -11,3 +11,17 @@ export interface Web3 {
 }
 
 export type LayerNetwork = 'ethereum' | 'starknet';
+
+export interface HashString {
+  full: string;
+  truncated?: string;
+}
+
+export interface BaseNftInfo {
+  id: number;
+  tokenId: string;
+  owner: HashString;
+  imageUri: string | null;
+  collectionName: string;
+  collectionAddress: HashString;
+}

@@ -2,6 +2,7 @@ export * from './head';
 export * from './cards';
 export * from './navbar';
 export * from './nav-button';
+export * from './modals';
 export * from './address-field';
 export * from './ethereum-logo';
 export * from './tabs';
