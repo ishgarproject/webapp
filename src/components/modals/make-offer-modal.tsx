@@ -71,7 +71,9 @@ export const MakeOfferModal: React.FC<IMakeOfferModal> = ({
               <Divider />
               <Text>Offer amount</Text>
               <InputGroup>
-                <InputLeftElement children={<EthereumLogo />} />
+                <InputLeftElement>
+                  <EthereumLogo />
+                </InputLeftElement>
                 <Input type="number" placeholder="Offer" value={etherOffer} onChange={changeOffer} />
               </InputGroup>
             </Stack>
