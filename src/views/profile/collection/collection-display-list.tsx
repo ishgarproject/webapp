@@ -26,7 +26,7 @@ const EthereumNftList: React.FC<IBaseCollectionDisplay> = ({ collectionAddress, 
   const { approve } = useERC721(collectionAddress!);
   return (
     <Grid templateColumns={{ base: 'repeat(4, 1fr)' }} gap={6}>
-      {tokens?.map(({ tokenId, imageUri, contract, approvedAddress }) => {
+      {tokens?.map(({ tokenId, imageUri, collectionAddress, approvedAddress }) => {
         const hasApproved = approvedAddress?.toLowerCase() === ISHGAR_VAULT_ADDRESS.toLowerCase();
         return (
           <GridItem key={tokenId}>
@@ -35,7 +35,7 @@ const EthereumNftList: React.FC<IBaseCollectionDisplay> = ({ collectionAddress, 
                 <Button variant="ghost" size="sm" onClick={() => approve(tokenId)} disabled={hasApproved}>
                   {hasApproved ? 'Approved' : 'Approve'}
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => depositNft(contract, tokenId)}>
+                <Button variant="ghost" size="sm" onClick={() => depositNft(collectionAddress, tokenId)}>
                   Deposit
                 </Button>
               </Stack>

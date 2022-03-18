@@ -12,6 +12,8 @@ export interface Web3 {
 
 export type LayerNetwork = 'ethereum' | 'starknet';
 
+export type Size = 'sm' | 'lg';
+
 export interface HashString {
   full: string;
   truncated?: string;

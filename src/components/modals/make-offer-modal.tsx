@@ -43,7 +43,7 @@ export const MakeOfferModal: React.FC<IMakeOfferModal> = ({
       alert('offer must be a valid strictly positive number');
       return;
     }
-    mutation.mutate({ tokenDatabaseId: id, valueInEther: +etherOffer });
+    mutation.mutate({ tokenDatabaseId: id, valueInEther: +etherOffer, collectionAddress: collectionAddress.full });
   };
 
   const changeOffer: ChangeEventHandler<HTMLInputElement> = (event) => {

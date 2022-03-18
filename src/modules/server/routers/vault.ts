@@ -1,12 +1,56 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
-import { truncateMiddleOfAddress } from '~/helpers';
+import { truncateMiddleOfAddress, getFirstCharactersOfHash } from '~/helpers';
 
 export const vaultRouter = createRouter()
+  .query('nft', {
+    input: z.object({
+      collectionAddress: z.string().nonempty('vault: address must not be empty'),
+      tokenId: z
+        .number()
+        .nonnegative('vault: tokenId must be positive')
+        .int('vault: databaseTokenId must be an integer'),
+    }),
+    async resolve({ ctx, input }) {
+      const { prisma } = ctx;
+      const { collectionAddress, tokenId } = input;
+      const nft = await prisma.token.findFirst({
+        where: { collectionAddress, tokenId: tokenId.toString() },
+        select: {
+          id: true,
+          tokenId: true,
+          imageUri: true,
+          owner: true,
+          collectionAddress: true,
+          Contract: { select: { name: true } },
+          orders: {
+            where: { orderType: OrderType.ASK, orderStatus: OrderStatus.OPEN },
+            select: { id: true, value: true },
+            orderBy: { value: 'desc' },
+            take: 1,
+          },
+        },
+      });
+
+      if (!nft) return null;
+
+      const { id, tokenId: tokenIdStr, imageUri, owner, orders, Contract } = nft;
+
+      return {
+        id,
+        tokenId: tokenIdStr,
+        imageUri,
+        owner: getFirstCharactersOfHash(owner),
+        highestAsk: orders[0]?.value || null,
+        collectionAddress,
+        collectionName: Contract?.name,
+      };
+    },
+  })
   .query('collection', {
     input: z.object({
-      address: z.string().nonempty('accounts: address must not be empty').optional(),
+      address: z.string().nonempty('vault: address must not be empty').optional(),
       buyNow: z.boolean(),
     }),
     async resolve({ ctx, input }) {
@@ -46,7 +90,7 @@ export const vaultRouter = createRouter()
       if (!collection) return;
       const totalTokensAvailable = await prisma.token.count({
         where: {
-          AND: [{ contract: address }, { depositedInVault: true }],
+          AND: [{ collectionAddress: address }, { depositedInVault: true }],
         },
       });
       // make highestAsk more accessible for frontend
@@ -63,7 +107,7 @@ export const vaultRouter = createRouter()
         where: {
           orderType: OrderType.ASK,
           orderStatus: OrderStatus.OPEN,
-          Token: { contract: address },
+          Token: { collectionAddress: address },
         },
         _min: { value: true },
       });
