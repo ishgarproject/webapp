@@ -16,7 +16,7 @@ export const NftPage: NextPage = () => {
   return (
     <Flex flexDir="row" minH="92vh" mt="1%" px="17%">
       <Stack direction="column" w="40%">
-        <Image src={nft?.imageUri || ''} />
+        <Image src={nft?.imageUri || ''} alt="nft-img" />
       </Stack>
       <Stack direction="column" w="60%" px="2%" spacing="3">
         <Text fontSize="xl" color="blue.500">
