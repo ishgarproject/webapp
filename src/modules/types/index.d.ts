@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import type { Token } from '@prisma/client';
 
 export interface Web3 {
   provider?: ethers.providers.Web3Provider;
@@ -19,11 +20,18 @@ export interface HashString {
   truncated?: string;
 }
 
-export interface BaseNftInfo {
+export interface BaseNft {
   id: number;
+  name: string | null;
   tokenId: string;
   owner: HashString;
   imageUri: string | null;
   collectionName: string;
   collectionAddress: HashString;
+  depositedInVault: boolean;
 }
+
+export type RawAttribute = {
+  value: string;
+  trait_type: string;
+};

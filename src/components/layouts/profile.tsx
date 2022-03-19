@@ -1,12 +1,12 @@
 import { Stack, Box, Avatar } from '@chakra-ui/react';
-import { Navbar, AddressField } from '~/components';
+import { DefaultLayout } from './default';
+import { AddressField } from '~/components';
 
 export const ProfileLayout: React.FC = ({ children }) => {
   return (
-    <Box h="100vh" w="100vw" minH="100vh" maxW="100vw" overflowX="hidden">
-      <Navbar />
-      <Stack direction="column">
-        <Stack h="40vh" direction="column" spacing="0">
+    <DefaultLayout>
+      <Stack direction="column" spacing="8" zIndex="0">
+        <Stack h="30vh" direction="column" spacing="0">
           <Box h="60%" bg="#151b22" />
           <Stack h="40%" direction="column" justify="space-between" pb="1%">
             <Stack align="center">
@@ -17,7 +17,7 @@ export const ProfileLayout: React.FC = ({ children }) => {
         </Stack>
         {children}
       </Stack>
-    </Box>
+    </DefaultLayout>
   );
 };
 

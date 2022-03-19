@@ -13,10 +13,9 @@ const Profile: NextPageWithLayout = () => {
     <>
       <Head />
       <Box px="10%">
-        <Table bg="#21262a">
+        <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>Id</Th>
               <Th>Collection</Th>
               <Th>Ethereum</Th>
               <Th>Starknet</Th>
@@ -24,10 +23,9 @@ const Profile: NextPageWithLayout = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data?.map(({ id, address, name, imageUri, totalTokensInWallet, totalTokensInVault }, index) => (
+            {data?.map(({ id, address, name, imageUri, totalTokensInWallet, totalTokensInVault }) => (
               <Link key={id} href={`/profile/${address}`} passHref>
                 <Tr _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.16)', cursor: 'pointer' }}>
-                  <Td>{index + 1}</Td>
                   <Td>
                     <SimpleItemCard label={name} imageUri={imageUri} />
                   </Td>

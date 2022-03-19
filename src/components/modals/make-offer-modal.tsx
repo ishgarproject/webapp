@@ -16,12 +16,12 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
-import type { BaseNftInfo } from '~/modules/types';
+import type { BaseNft } from '~/modules/types';
 import { ModalField } from '~/views/collection/modal-field';
 import { EthereumLogo } from '~/components';
 import trpc from '~/modules/trpc';
 
-type IMakeOfferModal = BaseNftInfo & { isActive: Boolean };
+type IMakeOfferModal = BaseNft & { isActive: Boolean };
 
 // TODO: Clean up
 // TODO: check if user has enough funds

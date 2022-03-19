@@ -1,12 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import { Stack, Button, Spacer, Text } from '@chakra-ui/react';
+import { Flex, Stack, Button, Spacer, Text } from '@chakra-ui/react';
 import { useWeb3Context } from '~/modules/context/web3-context';
 
 export const Navbar: React.FC = () => {
   const { provider, connectToWeb3Modal, disconnectFromWeb3Modal } = useWeb3Context();
   return (
-    <Stack direction="row" w="100vw" h="6vh" maxH="6vh" position="fixed" zIndex="1" px="4%" align="center" bg="#04111d">
+    <Flex
+      flexDir="row"
+      w="100vw"
+      h="9vh"
+      position="fixed"
+      zIndex="1"
+      px="4%"
+      align="center"
+      borderBottomWidth="1px"
+      bg="#141416"
+    >
       <Link href="/" passHref>
         <Text fontSize="xl" _hover={{ cursor: 'pointer' }}>
           Ishgar
@@ -23,7 +33,7 @@ export const Navbar: React.FC = () => {
           {provider ? 'Disconnect' : 'Connect'}
         </Button>
       </Stack>
-    </Stack>
+    </Flex>
   );
 };
 

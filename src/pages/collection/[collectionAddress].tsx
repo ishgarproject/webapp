@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Stack, Grid, GridItem } from '@chakra-ui/react';
 import { MarketplaceSidebar } from '~/components/sidebars/marketplace-sidebar';
-import { CollectionBanner } from '~/views/collection/collection-banner';
-import { Head, NftCard } from '~/components';
+import { Head, BaseNftCard } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Collection: NextPage = () => {
@@ -23,18 +22,12 @@ const Collection: NextPage = () => {
     <>
       <Head />
       <Stack direction="column" spacing="0">
-        <CollectionBanner
-          name={collection?.name}
-          address={collection?.address}
-          logoUri={collection?.tokens[0].imageUri}
-          stats={collection?.stats}
-        />
         <Stack direction="row" minH="94vh" spacing="4">
           <MarketplaceSidebar buyNow={buyNow} switchBuyNow={switchBuyNow} />
           <Grid templateColumns={{ base: 'repeat(4, 1fr)' }} gap="6" pt="1%">
             {collection?.tokens.map((token) => (
               <GridItem key={token.id}>
-                <NftCard {...token} collectionName={collection?.name} collectionAddress={collection?.address} />
+                <BaseNftCard {...token} name={collection?.name} collectionAddress={collectionAddress!.toString()} />
               </GridItem>
             ))}
           </Grid>

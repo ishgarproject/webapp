@@ -1,19 +1,23 @@
 import React from 'react';
-import { Box, Image, Text } from '@chakra-ui/react';
+import { Flex, Text, Image } from '@chakra-ui/react';
 
 export interface IBaseNftCard {
+  name: string | null;
   tokenId: string;
   imageUri: string | null;
+  collectionAddress?: string;
 }
 
-export const BaseNftCard: React.FC<IBaseNftCard> = ({ tokenId, imageUri, children }) => (
-  <Box>
-    <Image src={imageUri || ''} alt="nft-card" minW="200px" />
-    <Box px="3" py="2" pt="4" mt="-1" bg="#343a40" borderBottomRadius="lg">
-      <Text>#{tokenId}</Text>
-      {children}
-    </Box>
-  </Box>
-);
+export const BaseNftCard: React.FC<IBaseNftCard> = ({ name, imageUri, children }) => {
+  return (
+    <Flex flexDir="column" borderRadius="lg" borderWidth="1px">
+      <Image src={imageUri || ''} alt="nft-card-img" />
+      <Flex flexDir="column" justify="center" h="60px" px="5%" py="13%">
+        <Text>{name}</Text>
+        {children}
+      </Flex>
+    </Flex>
+  );
+};
 
 export default BaseNftCard;

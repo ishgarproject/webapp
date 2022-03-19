@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { createRouter } from '~/server/create-router';
 import { isAddress } from '~/modules/utils/web3';
+import { getAllTraitsFromTokens } from '~/helpers';
+import { ISHGAR_VAULT_ADDRESS } from '~/constants';
 
 const inputSchema = z.object({ ownerAddress: z.string().nonempty('accounts: address must not be empty').optional() });
 
@@ -73,6 +75,9 @@ export const accountsRouter = createRouter()
     async resolve({ ctx, input }) {
       const { prisma } = ctx;
       const { ownerAddress, collectionAddress, layerNetwork } = input;
+
+      if (!ownerAddress || !collectionAddress) return;
+
       const onStarknet = layerNetwork === 'starknet';
       const collection = await prisma.contract.findFirst({
         where: { address: collectionAddress },
@@ -80,21 +85,44 @@ export const accountsRouter = createRouter()
           name: true,
           address: true,
           tokens: {
-            where: {
-              OR: [{ owner: ownerAddress }, { depositorAddress: ownerAddress }],
+            where: { OR: [{ owner: ownerAddress }, { depositorAddress: ownerAddress }] },
+            select: {
+              name: true,
+              tokenId: true,
+              imageUri: true,
+              approvedAddress: true,
+              depositedInVault: true,
+              attributes: true,
             },
           },
         },
       });
+
+      if (!collection) return;
+
+      const traits = getAllTraitsFromTokens(collection.tokens);
       // prettier-ignore
-      const onL1Counter = collection?.tokens.reduce((sum, { depositedInVault }) => (depositedInVault ? sum : sum + 1), 0);
+      const onL1Counter = collection.tokens.reduce((sum, { depositedInVault }) => (depositedInVault ? sum : sum + 1), 0);
       // prettier-ignore
-      const onL2Counter = collection?.tokens.reduce((sum, { depositedInVault }) => (depositedInVault ? sum + 1 : sum), 0);
-      if (collection) {
-        collection.tokens = collection.tokens.filter(({ depositedInVault }) => depositedInVault === onStarknet);
-      }
+      const onL2Counter = collection.tokens.length - onL1Counter;
+      // omit `attributes` since it's not required on frontend
+      const tokens = collection.tokens.flatMap(({ name, tokenId, imageUri, approvedAddress, depositedInVault }) => {
+        if (depositedInVault !== onStarknet) return [];
+        return [
+          {
+            name,
+            tokenId,
+            imageUri,
+            approvedVault: approvedAddress?.toLowerCase() === ISHGAR_VAULT_ADDRESS.toLowerCase(),
+            depositedInVault,
+            collectionAddress,
+          },
+        ];
+      });
       return {
         ...collection,
+        traits,
+        tokens,
         totalTokensOnL1: onL1Counter,
         totalTokensOnL2: onL2Counter,
       };

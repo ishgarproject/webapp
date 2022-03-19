@@ -8,6 +8,7 @@ import { AppRouter } from '~/server/_app';
 import { Web3ContextProvider } from '~/modules/context/web3-context';
 import { DefaultLayout } from '~/components/layouts/default';
 import { TRPC_API_URL } from '~/constants';
+import theme from '~/theme';
 
 export type NextPageWithLayout = NextPage & {
   Layout?: React.FC;
@@ -20,7 +21,7 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout || DefaultLayout;
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Web3ContextProvider>
         <Layout>
           <Component {...pageProps} />
