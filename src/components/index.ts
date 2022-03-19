@@ -7,5 +7,4 @@ export * from './address-field';
 export * from './ethereum-logo';
 export * from './tabs';
 export * from './stat';
-export * from './simple-stat';
 export * from './loader';

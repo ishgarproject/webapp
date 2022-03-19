@@ -4,7 +4,7 @@ import { EthereumLogo } from './ethereum-logo';
 import type { Size } from '~/modules/types';
 
 interface IStat {
-  label: string;
+  label?: string;
   value?: string | null;
   size?: Size;
   isEther?: boolean;
@@ -18,7 +18,7 @@ const etherValue: Record<Size, TypographyProps['fontSize']> = {
 export const Stat: React.FC<IStat> = ({ label, value, size, isEther }) => {
   return (
     <Stack direction="column" align="flex-start" spacing="1">
-      <Text fontSize={size} pl="2%" color="gray.300">
+      <Text fontSize={size} pl="2%" color="gray.300" hidden={label?.length === 0}>
         {label}
       </Text>
       <Stack direction="row" align="center">
