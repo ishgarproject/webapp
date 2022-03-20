@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { createRouter } from '~/server/create-router';
 import { isAddress } from '~/modules/utils/web3';
-import { getAllTraitsFromTokens } from '~/helpers';
+import { getAllTraitsFromTokens } from '~/modules/helpers';
 import { ISHGAR_VAULT_ADDRESS } from '~/constants';
 
 const inputSchema = z.object({ ownerAddress: z.string().nonempty('accounts: address must not be empty').optional() });

@@ -17,8 +17,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import type { BaseNft } from '~/modules/types';
-import { ModalField } from '~/views/collection/modal-field';
 import { EthereumLogo } from '~/components';
+import { ModalField } from './modal-field';
 import trpc from '~/modules/trpc';
 
 type IMakeOfferModal = BaseNft & { isActive: Boolean };

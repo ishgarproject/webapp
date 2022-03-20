@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { Stack, Grid, GridItem } from '@chakra-ui/react';
-import { MarketplaceSidebar } from '~/components/sidebars/marketplace-sidebar';
-import { Head, BaseNftCard } from '~/components';
+import { Flex, Divider } from '@chakra-ui/react';
+import { CollectionSidebar } from '~/views/collection/collection-sidebar';
+import { Head, CollectionBanner, BannerLabel, NftsList } from '~/components';
 import trpc from '~/modules/trpc';
 
 const Collection: NextPage = () => {
@@ -21,18 +21,23 @@ const Collection: NextPage = () => {
   return (
     <>
       <Head />
-      <Stack direction="column" spacing="0">
-        <Stack direction="row" minH="94vh" spacing="4">
-          <MarketplaceSidebar buyNow={buyNow} switchBuyNow={switchBuyNow} />
-          <Grid templateColumns={{ base: 'repeat(4, 1fr)' }} gap="6" pt="1%">
-            {collection?.tokens.map((token) => (
-              <GridItem key={token.id}>
-                <BaseNftCard {...token} name={collection?.name} collectionAddress={collectionAddress!.toString()} />
-              </GridItem>
-            ))}
-          </Grid>
-        </Stack>
-      </Stack>
+      <Flex flexDir="row" minH="91vh">
+        <CollectionSidebar buyNow={buyNow} switchBuyNow={switchBuyNow} />
+        <Flex flexDir="column" flex="1">
+          <CollectionBanner name={collection?.name}>
+            <BannerLabel label="Floor" value={collection?.stats.floor} />
+            <Divider orientation="vertical" />
+            <BannerLabel label="Contract address" value={collection?.address.truncated} />
+            <Divider orientation="vertical" />
+          </CollectionBanner>
+          <NftsList
+            collectionAddress={collectionAddress?.toString()}
+            tokens={collection?.tokens}
+            buttonLabel="Details"
+            buttonAction={() => {}}
+          />
+        </Flex>
+      </Flex>
     </>
   );
 };

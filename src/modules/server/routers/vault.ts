@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
-import { truncateMiddleOfAddress, getFirstCharactersOfHash } from '~/helpers';
+import { truncateMiddleOfAddress, getFirstCharactersOfHash } from '~/modules/helpers';
 
 export const vaultRouter = createRouter()
   .query('nft', {
@@ -71,6 +71,7 @@ export const vaultRouter = createRouter()
               : { depositedInVault: true },
             select: {
               id: true,
+              name: true,
               tokenId: true,
               imageUri: true,
               owner: true,

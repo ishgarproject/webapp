@@ -1,32 +1,25 @@
 import React from 'react';
-import { Stack, Text, IconButton, Divider } from '@chakra-ui/react';
+import { Flex, Text, IconButton, Divider } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 
 export const BaseSidebar: React.FC = ({ children }) => {
   return (
-    <Stack
-      direction="column"
-      minW="17vw"
-      maxW="17vw"
-      pl="2%"
-      pr="1%"
-      pt="1%"
-      spacing="4"
-      bg="#21262a"
-      borderRightWidth="0.5px"
-      borderRightColor="gray.700"
-    >
-      <Stack direction="row" justify="space-between" align="center">
-        <Text fontSize="xl" fontWeight="bold">
-          Filters
-        </Text>
-        <IconButton variant="ghost" icon={<ChevronLeftIcon />} aria-label="filter-open-icon" />
-      </Stack>
+    <Flex flexDir="column" w="250px" px="20px" py="10px" borderRightWidth="1px" gap="4">
+      <Flex flexDir="row" align="center" justify="space-between">
+        <Text fontSize="2xl">Filter</Text>
+        <IconButton
+          variant="ghost"
+          icon={<ChevronLeftIcon boxSize="20px" />}
+          aria-label="sidebar-toggle"
+          borderWidth="1px"
+          borderRadius="full"
+        />
+      </Flex>
       <Divider />
-      <Stack direction="column" spacing="4">
+      <Flex flexDir="column" gap="4">
         {children}
-      </Stack>
-    </Stack>
+      </Flex>
+    </Flex>
   );
 };
 
