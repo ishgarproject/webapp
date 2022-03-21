@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Flex, Stack, Button, Text, Image } from '@chakra-ui/react';
+import { Attributes } from '~/views/collection/attributes';
 import { Stat } from '~/components';
 import trpc from '~/modules/trpc';
 
@@ -14,11 +15,12 @@ export const NftPage: NextPage = () => {
   ]);
   console.log('nft', nft);
   return (
-    <Flex flexDir="row" minH="92vh" mt="1%" px="17%">
-      <Stack direction="column" w="40%">
+    <Flex flexDir="row" minH="91vh" mt="1%" px="10%">
+      <Flex flexDir="column" w="25%" gap={4}>
         <Image src={nft?.imageUri || ''} alt="nft-img" />
-      </Stack>
-      <Stack direction="column" w="60%" px="2%" spacing="3">
+        {nft?.attributes && <Attributes attributes={nft.attributes} />}
+      </Flex>
+      <Flex flexDir="column" flex="1" px="2%" gap="3">
         <Text fontSize="xl" color="blue.500">
           {nft?.collectionName}
         </Text>
@@ -33,7 +35,7 @@ export const NftPage: NextPage = () => {
             <Button>Make offer</Button>
           </Stack>
         </Stack>
-      </Stack>
+      </Flex>
     </Flex>
   );
 };

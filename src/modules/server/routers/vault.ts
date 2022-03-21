@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
-import { truncateMiddleOfAddress, getFirstCharactersOfHash } from '~/modules/helpers';
+import { truncateMiddleOfAddress, getFirstCharactersOfHash, extractTraitsFromRawAttributes } from '~/modules/helpers';
+import type { RawAttribute } from '~/modules/types';
 
 export const vaultRouter = createRouter()
   .query('nft', {
@@ -22,6 +23,7 @@ export const vaultRouter = createRouter()
           tokenId: true,
           imageUri: true,
           owner: true,
+          attributes: true,
           collectionAddress: true,
           Contract: { select: { name: true } },
           orders: {
@@ -34,13 +36,12 @@ export const vaultRouter = createRouter()
       });
 
       if (!nft) return null;
-
-      const { id, tokenId: tokenIdStr, imageUri, owner, orders, Contract } = nft;
-
+      const { id, tokenId: tokenIdStr, imageUri, attributes, owner, orders, Contract } = nft;
       return {
         id,
         tokenId: tokenIdStr,
         imageUri,
+        attributes: attributes as RawAttribute[],
         owner: getFirstCharactersOfHash(owner),
         highestAsk: orders[0]?.value || null,
         collectionAddress,

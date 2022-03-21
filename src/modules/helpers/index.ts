@@ -4,7 +4,6 @@ import { isAddress } from '~/modules/utils/web3';
 import type { RawAttribute } from '~/modules/types';
 
 export function getAllTraitsFromTokens(tokens: { attributes: Prisma.JsonValue }[]) {
-  // const traits: Record<string, Record<string, boolean>> = {}
   return tokens?.reduce((acc, { attributes }) => {
     const rawAttributes = attributes as RawAttribute[];
     const traits = extractTraitsFromRawAttributes(rawAttributes);
@@ -12,7 +11,7 @@ export function getAllTraitsFromTokens(tokens: { attributes: Prisma.JsonValue }[
   }, {} as Record<string, Record<string, boolean>>);
 }
 
-function extractTraitsFromRawAttributes(rawAttributes: RawAttribute[]) {
+export function extractTraitsFromRawAttributes(rawAttributes: RawAttribute[]) {
   return rawAttributes.reduce((acc, { trait_type, value }) => {
     if (!acc[trait_type]) {
       return { ...acc, [trait_type]: { [value]: true } };
