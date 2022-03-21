@@ -31,10 +31,11 @@ const Collection: NextPage = () => {
             <Divider orientation="vertical" />
           </CollectionBanner>
           <NftsList
-            collectionAddress={collectionAddress?.toString()}
+            collectionAddress={collection?.address.full}
             tokens={collection?.tokens}
             buttonLabel="Details"
             buttonAction={() => {}}
+            isLink
           />
         </Flex>
       </Flex>

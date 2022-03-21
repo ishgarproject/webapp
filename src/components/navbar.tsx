@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
       h="9vh"
       position="fixed"
       zIndex="1"
-      px="4%"
+      px="20px"
       align="center"
       borderBottomWidth="1px"
       bg="#141416"
