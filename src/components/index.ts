@@ -6,4 +6,5 @@ export * from './ethereum-logo';
 export * from './banner';
 export * from './nfts-list';
 export * from './stat';
+export * from './avatar';
 export * from './loader';

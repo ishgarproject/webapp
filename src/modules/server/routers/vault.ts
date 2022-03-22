@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
-import { truncateMiddleOfAddress, getFirstCharactersOfHash, extractTraitsFromRawAttributes } from '~/modules/helpers';
+import { truncateMiddleOfAddress } from '~/modules/helpers';
 import type { RawAttribute } from '~/modules/types';
 
 export const vaultRouter = createRouter()
@@ -20,30 +20,33 @@ export const vaultRouter = createRouter()
         where: { collectionAddress, tokenId: tokenId.toString() },
         select: {
           id: true,
+          name: true,
           tokenId: true,
           imageUri: true,
           owner: true,
+          depositorAddress: true,
           attributes: true,
           collectionAddress: true,
           Contract: { select: { name: true } },
           orders: {
             where: { orderType: OrderType.ASK, orderStatus: OrderStatus.OPEN },
             select: { id: true, value: true },
-            orderBy: { value: 'desc' },
+            orderBy: { value: 'asc' },
             take: 1,
           },
         },
       });
 
-      if (!nft) return null;
-      const { id, tokenId: tokenIdStr, imageUri, attributes, owner, orders, Contract } = nft;
+      if (!nft) return;
+      const { id, name, tokenId: tokenIdStr, imageUri, attributes, owner, depositorAddress, orders, Contract } = nft;
       return {
         id,
+        name,
         tokenId: tokenIdStr,
         imageUri,
         attributes: attributes as RawAttribute[],
-        owner: getFirstCharactersOfHash(owner),
-        highestAsk: orders[0]?.value || null,
+        owner: truncateMiddleOfAddress(depositorAddress || owner),
+        lowestAsk: orders[0]?.value || null,
         collectionAddress,
         collectionName: Contract?.name,
       };
