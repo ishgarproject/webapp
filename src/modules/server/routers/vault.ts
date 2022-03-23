@@ -30,7 +30,7 @@ export const vaultRouter = createRouter()
           Contract: { select: { name: true } },
           orders: {
             where: { orderType: OrderType.ASK, orderStatus: OrderStatus.OPEN },
-            select: { id: true, value: true },
+            select: { id: true, creator: true, value: true },
             orderBy: { value: 'asc' },
             take: 1,
           },
@@ -47,6 +47,7 @@ export const vaultRouter = createRouter()
         attributes: attributes as RawAttribute[],
         owner: truncateMiddleOfAddress(depositorAddress || owner),
         lowestAsk: orders[0]?.value || null,
+        orders,
         collectionAddress,
         collectionName: Contract?.name,
       };
