@@ -19,14 +19,12 @@ import {
 import type { BaseNft } from '~/modules/types';
 import { EthereumLogo } from '~/components';
 import { ModalField } from './modal-field';
-import trpc from '~/modules/trpc';
 
 type IMakeOfferModal = BaseNft & { isActive: Boolean };
 
 // TODO: Clean up
 // TODO: check if user has enough funds
 export const MakeOfferModal: React.FC<IMakeOfferModal> = ({
-  id,
   tokenId,
   imageUri,
   collectionName,
@@ -34,7 +32,6 @@ export const MakeOfferModal: React.FC<IMakeOfferModal> = ({
   collectionAddress,
   isActive,
 }) => {
-  const mutation = trpc.useMutation(['order.create-bid']);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [etherOffer, setEtherOffer] = useState<string>('');
 
@@ -43,7 +40,6 @@ export const MakeOfferModal: React.FC<IMakeOfferModal> = ({
       alert('offer must be a valid strictly positive number');
       return;
     }
-    mutation.mutate({ tokenDatabaseId: id, valueInEther: +etherOffer, collectionAddress: collectionAddress.full });
   };
 
   const changeOffer: ChangeEventHandler<HTMLInputElement> = (event) => {
