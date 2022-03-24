@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createRouter } from '~/server/create-router';
 import { OrderType, OrderStatus } from '@prisma/client';
-import { truncateMiddleOfAddress } from '~/modules/helpers';
+import { getAllTraitsFromTokens, truncateMiddleOfAddress } from '~/modules/helpers';
 import type { RawAttribute } from '~/modules/types';
 
 export const vaultRouter = createRouter()
@@ -51,6 +51,21 @@ export const vaultRouter = createRouter()
         collectionAddress,
         collectionName: Contract?.name,
       };
+    },
+  })
+  .query('all-attributes', {
+    input: z.object({
+      collectionAddress: z.string().nonempty('vault: collection address must not be empty').optional(),
+    }),
+    async resolve({ ctx, input }) {
+      const { prisma } = ctx;
+      const { collectionAddress } = input;
+      if (!collectionAddress) return;
+      const rawAttributes = await prisma.token.findMany({
+        where: { collectionAddress },
+        select: { attributes: true },
+      });
+      return getAllTraitsFromTokens(rawAttributes);
     },
   })
   .query('collection', {

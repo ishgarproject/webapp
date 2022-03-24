@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Flex, Divider } from '@chakra-ui/react';
-import { CollectionSidebar } from '~/views/collection/collection-sidebar';
+import { CollectionSidebar } from '~/views/collection';
 import { Head, CollectionBanner, BannerLabel, NftsList } from '~/components';
 import trpc from '~/modules/trpc';
 
