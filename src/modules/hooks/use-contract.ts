@@ -3,8 +3,8 @@ import { Contract, ContractInterface } from '@ethersproject/contracts';
 import useWeb3 from './use-web3';
 import { getContract } from '~/modules/utils/web3';
 import IshgarVaultAbi from '~/abis/IshgarVault.json';
-import ERC721Abi from '~/abis/ERC721.json';
-import type { IshgarVault, ERC721 } from '~/abis/types';
+import MockERC721Abi from '~/abis/MockERC721.json';
+import type { IshgarVault, MockERC721 } from '~/abis/types';
 import { ISHGAR_VAULT_ADDRESS } from '~/constants';
 
 export function useContract<T extends Contract = Contract>(
@@ -48,7 +48,16 @@ export function useIshgar(withSignerIfPossible?: boolean) {
 }
 
 export function useERC721(address: string, withSignerIfPossible?: boolean) {
-  const contract = useContract<ERC721>(address, ERC721Abi, withSignerIfPossible);
+  const contract = useContract<MockERC721>(address, MockERC721Abi, withSignerIfPossible);
+
+  const mint = async () => {
+    try {
+      const tx = await contract?.mint();
+      console.log(tx);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const approve = async (tokenId: string) => {
     try {
@@ -59,5 +68,5 @@ export function useERC721(address: string, withSignerIfPossible?: boolean) {
     }
   };
 
-  return { contract, approve };
+  return { contract, mint, approve };
 }

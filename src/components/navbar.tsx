@@ -40,6 +40,11 @@ export const Navbar: React.FC = () => {
 const itemList = [
   {
     id: 0,
+    label: 'Mint',
+    href: '/mint',
+  },
+  {
+    id: 1,
     label: 'Profile',
     href: '/profile',
   },
